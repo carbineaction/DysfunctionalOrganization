@@ -1,0 +1,20 @@
+President|Stan Lee
+VP|Carol|Stan Lee
+VP|Dana|Stan Lee
+Supervisor|Albus Dumbledore|Carol
+Worker|Luna Lovegood|Albus Dumbledore
+Worker|Neville Longbottom|Albus Dumbledore
+Worker|Hermione|Albus Dumbledore
+Worker|Ron Weasley|Albus Dumbledore
+Worker|Harry Potter|Albus Dumbledore
+Supervisor|Ned Stark|Dana
+Worker|Jon Snow|Ned Stark
+Worker|Rob Stark|Ned Stark
+Worker|Arya Stark|Ned Stark
+Worker|Sansa Stark|Ned Stark
+Worker|Catelyn Stark|Ned Stark
+Supervisor|Yoda|Carol
+Worker|Mace Windu|Yoda
+Worker|Qui GonJin|Yoda
+Worker|Ben Kenobi|Yoda
+Worker|Anakin Skywalker|Yoda

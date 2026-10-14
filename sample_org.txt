@@ -1,0 +1,10 @@
+President|Bob
+VP|Carol|Bob
+VP|Dana|Bob
+Supervisor|Ted|Carol
+Supervisor|Pellas|Carol
+Worker|Alice|Ted
+Worker|Wolfgang|Ted
+Worker|Adolph|Ted
+Supervisor|Mira|Dana
+Worker|Melissande|Mira
