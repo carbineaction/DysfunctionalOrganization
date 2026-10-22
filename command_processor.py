@@ -4,22 +4,51 @@ from organization_file import OrganizationFile
 
 class CommandProcessor:
     """Parses user commands and calls the appropriate organization method."""
+
     HELP = '''Commands (quote names with spaces):
-  load FILE
-  display
-  hire MANAGER VP|Supervisor|Worker EMPLOYEE_NAME
-  fire MANAGER EMPLOYEE_NAME
-  quit EMPLOYEE_NAME
-  layoff MANAGER EMPLOYEE_NAME
-  transfer PRESIDENT_OR_VP EMPLOYEE_NAME DESTINATION_MANAGER
-  promote RECEIVING_MANAGER EMPLOYEE_NAME
-  help
-  exit'''
+
+*Notes: Use quotes only for names containing spaces. Ex: Ted or "Ted Smith"
+
+load FILE_NAME 
+    Load an organization from a file
+
+display 
+    View the current organization that has successfully been loaded
+
+hire MANAGER VP|Supervisor|Worker EMPLOYEE  
+    Hire a new employee into a vacant position of the specified level.
+    Ex: hire NAME Worker NAME 
+
+fire MANAGER EMPLOYEE  
+    Fire an employee who is within the manager's directlyhierarchy
+
+quit EMPLOYEE  
+    Quit the organization.
+
+layoff MANAGER EMPLOYEE  
+    Lay off an employee who is within the manager's directly hierarchy
+
+transfer PRESIDENT_OR_VP EMPLOYEE DESTINATION_MANAGER
+    Transfer an employee to a different manager.
+
+promote RECEIVING_MANAGER EMPLOYEE  
+    Promote an employee to a higher position.
+
+help  
+    Display this help message.
+
+exit
+    Exit the program.
+            
+'''
 
     def __init__(self, organization=None):
         self.organization = organization or Organization()
 
     def execute(self, command):
+        """Parses a single user command string; returns: The text output or status message resulting from the command;
+        raises: OrganizationError: If quotation marks are mismatched or invalid.
+        """
         try:
             parts = shlex.split(command)
         except ValueError as exc:
@@ -34,7 +63,7 @@ class CommandProcessor:
         if cmd == "load" and len(parts) >= 2:
             loaded = OrganizationFile.load(" ".join(parts[1:]))
             org.root = loaded.root
-            return f"Loaded organization from {' '.join(parts[1:])}."
+            return f"Successfully loaded organization from {' '.join(parts[1:])}. Type 'display' to view the file."
         if cmd == "hire" and len(parts) >= 4:
             level = {"vp": "VP", "supervisor": "Supervisor", "worker": "Worker"}.get(parts[2].casefold())
             if not level:
