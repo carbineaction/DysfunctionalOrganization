@@ -23,7 +23,7 @@ fire MANAGER EMPLOYEE
     Fire an employee who is within the manager's directlyhierarchy
 
 quit EMPLOYEE  
-    Quit the organization.
+    An employee quits the organization.
 
 layoff MANAGER EMPLOYEE  
     Lay off an employee who is within the manager's directly hierarchy
