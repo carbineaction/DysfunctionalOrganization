@@ -11,9 +11,13 @@ class Organization:
 
     @staticmethod
     def normalize(name):
+        """Format name by removing extra spaces.
+         Returns the name in a consistent forma """
         return " ".join(name.strip().split())
 
     def positions(self):
+        """Return a list of all positions in the organization.
+        Traverses the entire organization hierarchy. """
         result = []
         def visit(pos):
             result.append(pos)
@@ -23,16 +27,21 @@ class Organization:
         return result
 
     def find(self, name):
+        """Find an employee by name.
+        Returns the employee's position or None if not found."""
         wanted = self.normalize(name).casefold()
         return next((p for p in self.positions() if p.employee and p.employee.name.casefold() == wanted), None)
 
     def require(self, name):
+        """Find an employee by name.
+        Raises an error if the employee does not exist."""
         found = self.find(name)
         if found is None:
             raise OrganizationError(f"Employee not found: {name}")
         return found
 
     def is_descendant(self, position, manager):
+        """Check if a position is under a manager's hierarchy."""
         current = position.parent
         while current:
             if current is manager:
@@ -41,6 +50,8 @@ class Organization:
         return False
 
     def ancestor(self, position, level):
+        """Find a manager above a position at the given level.
+        Returns the matching position or None if not found."""
         current = position
         while current:
             if current.level == level:
@@ -49,15 +60,20 @@ class Organization:
         return None
 
     def vacant_child(self, manager, level):
+        """Find an empty position under a manager.
+        Returns the first available position at the given level."""
         return next((p for p in manager.children if p.level == level and p.is_vacant), None)
 
     def check_unique(self, name):
+        """Make sure the employee name is not already in use.
+        Raises an error if the name already exists."""
         employee = Employee(name)
         if self.find(employee.name):
             raise OrganizationError(f"That name is already used: {employee.name}")
         return employee
 
     def hire(self, manager_name, level, name):
+        """Hire a new employee into a vacant position."""
         manager = self.require(manager_name)
         if manager.level not in CHILD_LEVEL or CHILD_LEVEL[manager.level] != level:
             raise OrganizationError(f"{manager.level} may hire only its direct subordinate level.")
@@ -68,6 +84,8 @@ class Organization:
         return f"Hired {slot.employee.name} as {level} under {manager_name}."
 
     def fire(self, manager_name, employee_name):
+        """Remove an employee from their position.
+        The position becomes vacant after the employee is fired."""
         manager, target = self.require(manager_name), self.require(employee_name)
         if target is self.root:
             raise OrganizationError("The president cannot be fired.")
@@ -77,6 +95,8 @@ class Organization:
         return f"{employee_name} was fired; the position is now vacant."
 
     def quit(self, employee_name):
+        """Allow an employee to leave the organization.
+        The employee's position becomes vacant."""
         target = self.require(employee_name)
         if target is self.root:
             raise OrganizationError("The president cannot quit.")
@@ -84,6 +104,8 @@ class Organization:
         return f"{employee_name} quit; the position is now vacant."
 
     def layoff(self, manager_name, employee_name):
+        """Lay off an employee from the organization.
+        Moves the employee to a comparable vacant position when possible."""
         manager, target = self.require(manager_name), self.require(employee_name)
         if target is self.root or not self.is_descendant(target, manager):
             raise OrganizationError("The president cannot be laid off, and you may only lay off subordinates.")
@@ -108,6 +130,7 @@ class Organization:
         return f"{name} was laid off; no comparable vacancy was available."
 
     def transfer(self, initiator_name, employee_name, destination_manager_name):
+        """Transfer an employee to another manager."""
         initiator = self.require(initiator_name)
         target = self.require(employee_name)
         destination_manager = self.require(destination_manager_name)
@@ -128,6 +151,8 @@ class Organization:
         return f"Transferred {name} under {destination_manager_name}."
 
     def promote(self, receiving_manager_name, employee_name):
+        """Promote an employee to the next higher level.
+        Moves the employee into a valid vacant position."""
         manager, target = self.require(receiving_manager_name), self.require(employee_name)
         next_level = {"Worker": "Supervisor", "Supervisor": "VP"}.get(target.level)
         if next_level is None or manager.level not in CHILD_LEVEL or CHILD_LEVEL[manager.level] != next_level:
@@ -144,9 +169,13 @@ class Organization:
         return f"Promoted {name} to {next_level} under {receiving_manager_name}."
 
     def has_employee_below(self, position):
+        """Check if a position has any employees below it.
+        Returns True if employees exist in its subtree."""
         return any(p.employee is not None or self.has_employee_below(p) for p in position.children)
 
     def display(self):
+        """Create a formatted view of the organization hierarchy.
+        Shows all filled positions and relevant vacant positions."""
         if self.root.employee is None: 
             return "(No file loaded. Type 'load FILE_NAME' first.)"
         lines = [f"President: {self.root.employee.name}"]
