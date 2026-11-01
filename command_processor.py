@@ -17,7 +17,7 @@ display
 
 hire MANAGER VP|Supervisor|Worker EMPLOYEE  
     Hire a new employee into a vacant position of the specified level.
-    Ex: hire NAME Worker NAME 
+    Ex: hire MANAGER Worker EMPLOYEE
 
 fire MANAGER EMPLOYEE  
     Fire an employee who is within the manager's directlyhierarchy
@@ -31,7 +31,7 @@ layoff MANAGER EMPLOYEE
 transfer PRESIDENT_OR_VP EMPLOYEE DESTINATION_MANAGER
     Transfer an employee to a different manager.
 
-promote RECEIVING_MANAGER EMPLOYEE  
+promote DESTINATION_MANAGER EMPLOYEE  
     Promote an employee to a higher position.
 
 help  

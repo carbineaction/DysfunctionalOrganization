@@ -147,7 +147,7 @@ class Organization:
         return any(p.employee is not None or self.has_employee_below(p) for p in position.children)
 
     def display(self):
-        if self.root.employee is None:
+        if self.root.employee is None: 
             return "(No file loaded. Type 'load FILE_NAME' first.)"
         lines = [f"President: {self.root.employee.name}"]
         def visit(parent, indent):

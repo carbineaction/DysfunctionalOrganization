@@ -79,11 +79,11 @@ Names containing spaces must be enclosed in quotation marks when entered in comm
 | **load** | `load FILE_NAME` | Load an organization file by entering `load FILE_NAME`. The file must follow the required organization file format. |
 | **display / show** | `display` / `show` | View the current organization that has successfully been loaded. |
 | **hire** | `hire NAME Worker NAME` <br> `MANAGER VP\|Supervisor\|Worker EMPLOYEE` | Hire a new employee into a vacant position of the specified level. |
-| **fire** | `fire MANAGER_NAME EMPLOYEE_NAME` | Fire an employee who is within the manager's direct hierarchy. |
-| **quit** | `quit EMPLOYEE_NAME` | Employee quits the organization. |
-| **layoff** | `layoff MANAGER_NAME EMPLOYEE_NAME` | Lay off an employee who is within the manager's direct hierarchy. |
-| **transfer** | `transfer PRESIDENT/VICE_PRESIDENT_NAME EMPLOYEE_NAME DESTINATION_MANAGER` | Transfer an employee to a different manager. |
-| **promote** | `promote RECEIVING_MANAGER EMPLOYEE_NAME` | Promote an employee to a higher position. |
+| **fire** | `fire MANAGER EMPLOYEE` | Fire an employee who is within the manager's direct hierarchy. |
+| **quit** | `quit EMPLOYEE` | Employee quits the organization. |
+| **layoff** | `layoff MANAGER EMPLOYEE` | Lay off an employee who is within the manager's direct hierarchy. |
+| **transfer** | `transfer PRESIDENT/VICE_PRESIDENT EMPLOYEE DESTINATION_MANAGER` | Transfer an employee to a different manager. |
+| **promote** | `promote RECEIVING_MANAGER EMPLOYEE` | Promote an employee to a higher position. |
 | **help** | `help` | Display this help message. |
 | **exit / quitprogram** | `exit` / `quitprogram` | Exit the program. |
 
